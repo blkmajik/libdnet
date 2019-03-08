@@ -66,6 +66,45 @@ AC_SUBST(TCLLIB)
 AM_CONDITIONAL(PYTHON, [test "x$PYTHON" != "x"])
 AM_CONDITIONAL(TCL, [test "x$TCLINC" != "x"])
 
+dnl Checks for Pyrex.
+dnl XXX - use AM_PATH_PYTHON after automake upgrade
+AC_MSG_CHECKING(for Pyrex)
+AC_ARG_WITH(python,
+[  --with-pyrex=EXE       Converty pyx file to .c using pyrex or cythonize],
+[ case "$withval" in
+  yes)
+     AC_MSG_RESULT(yes)
+     mypyrex=`which pyrexc`
+     mycythonize=`which cythonize`
+     if test -n "${mypyrex}"; then
+     	pyrex="${mypyrex}"
+     elif test -n "${mycythonize}" ; then
+     	pyrex="${mycythonize}"
+     fi
+     if test -x $pyrex; then
+        PYREX="$pyrex"
+     fi
+     if test "x$PYREX" = "x"; then
+        AC_ERROR(pyrexc or cythonize not found)
+     fi
+     ;;
+  no)
+     AC_MSG_RESULT(no)
+     ;;
+  *)
+     AC_MSG_RESULT($withval)
+     if test -x $withval; then
+        PYREX="$withval"
+     fi
+     if test "x$PYREX" = "x"; then
+        AC_ERROR($withval not found)
+     fi
+     ;;
+  esac 
+])
+AC_SUBST(PYREX)
+AM_CONDITIONAL(PYREX, [test "x$PYREX" != "x"])
+
 dnl XXX - stupid IRIX cpp
 if test -r /usr/include/sgidefs.h ; then
 	CPPFLAGS="$CPPFLAGS -D__sgi"
