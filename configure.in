@@ -69,7 +69,7 @@ AM_CONDITIONAL(TCL, [test "x$TCLINC" != "x"])
 dnl Checks for Pyrex.
 dnl XXX - use AM_PATH_PYTHON after automake upgrade
 AC_MSG_CHECKING(for Pyrex)
-AC_ARG_WITH(python,
+AC_ARG_WITH(pyrex,
 [  --with-pyrex=EXE       Converty pyx file to .c using pyrex or cythonize],
 [ case "$withval" in
   yes)
