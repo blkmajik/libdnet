@@ -5,15 +5,17 @@ dnl Copyright (c) 2000 Dug Song <dugsong@monkey.org>
 dnl
 dnl $Id$
 
-AC_INIT(include/dnet.h)
+dnl AC_INIT(include/dnet.h)
+AC_INIT([libdnet], 1.12)
 AC_CONFIG_AUX_DIR(config)
 AC_SUBST(ac_aux_dir)
+m4_pattern_allow(^AC_DNET)
 
-AM_INIT_AUTOMAKE(libdnet, 1.12)
+AM_INIT_AUTOMAKE
 AM_CONFIG_HEADER(include/config.h)
 
 dnl XXX - stop the insanity!@#$
-AM_MAINTAINER_MODE
+dnl AM_MAINTAINER_MODE
 
 dnl Check for system type.
 dnl XXX - we do this to qualify our later feature checks, since some
@@ -58,7 +60,7 @@ AC_ARG_WITH(python,
         AC_ERROR($withval not found)
      fi
      ;;
-  esac 
+  esac
 ])
 AC_SUBST(PYTHON)
 AC_SUBST(TCLINC)
@@ -100,7 +102,7 @@ AC_ARG_WITH(pyrex,
         AC_ERROR($withval not found)
      fi
      ;;
-  esac 
+  esac
 ])
 AC_SUBST(PYREX)
 AM_CONDITIONAL(PYREX, [test "x$PYREX" != "x"])
@@ -114,11 +116,11 @@ if test "$CYGWIN" = yes ; then
 	if test -d /usr/include/mingw ; then
 		CPPFLAGS="$CPPFLAGS -mno-cygwin"
 		CFLAGS="$CFLAGS -mno-cygwin"
-		AC_DEFINE(WIN32_LEAN_AND_MEAN, 1, 
+		AC_DEFINE(WIN32_LEAN_AND_MEAN, 1,
 		    [Define for faster code generation.])
 		AC_CHECK_LIB(ws2_32, main)
 		AC_CHECK_LIB(iphlpapi, main)
-		AC_DEFINE(snprintf, _snprintf, 
+		AC_DEFINE(snprintf, _snprintf,
 		    [Use MingW32's internal snprintf])
 	else
 		AC_MSG_ERROR([need MingW32 package to build under Cygwin])
@@ -151,7 +153,7 @@ fi
 
 dnl Checks for libraries.
 if test "$CYGWIN" != yes ; then
-	AC_LBL_LIBRARY_NET
+	dnl AC_LBL_LIBRARY_NET
 	AC_CHECK_LIB(nm, open_mib)
 fi
 
