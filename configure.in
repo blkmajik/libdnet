@@ -40,7 +40,7 @@ dnl Checks for Python.
 dnl XXX - use AM_PATH_PYTHON after automake upgrade
 AC_MSG_CHECKING(for Python)
 AC_ARG_WITH(python,
-[  --with-python=DIR       build Python module (using python in DIR)],
+[  --with-python=EXE       build Python module using python EXE],
 [ case "$withval" in
   yes)
      AC_MSG_RESULT(yes)
@@ -51,16 +51,11 @@ AC_ARG_WITH(python,
      ;;
   *)
      AC_MSG_RESULT($withval)
-     for subdir in . bin; do
-        if test -x $withval/$subdir/python; then
-	   owd=`pwd`
-	   if cd $withval/$subdir; then withval=`pwd`; cd $owd; fi
-	   PYTHON="$withval/python"
-	   break
-	fi
-     done
+     if test -x $withval; then
+        PYTHON="$withval"
+     fi
      if test "x$PYTHON" = "x"; then
-        AC_ERROR(python not found in $withval)
+        AC_ERROR($withval not found)
      fi
      ;;
   esac 
